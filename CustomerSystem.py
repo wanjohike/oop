@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.orm import declarative_base
 
 # create the database
-engine = create_engine('sqlite:///customer3.db')
+engine = create_engine('sqlite:///customer6.db')
 Base = declarative_base()#this defines our base class for defining our actual models
 
 class Person(Base):#is subclass of Base
