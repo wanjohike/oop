@@ -22,4 +22,6 @@ ipdadx = 5
 ipady=5
 expand=True
 
+# adding an image to a button
+
 root.mainloop()#the main loop ensures that the main windw remain visible on the screen
