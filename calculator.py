@@ -14,11 +14,14 @@ def calculate():
     except Exception as e:
         display.delete(0, tk.END)
         display.insert(tk.END, "Error")
+
+#crate the main window. you can call it anything, for instance main, being that its
+#the first window 
 root = tk.Tk()
 root.title("Calculator")
 root.geometry("400x500")
-root.resizable(False, False)
-root.configure(bg="#ADD8E6")
+root.resizable(False, False)#the window will not be resized
+root.configure(bg="#ADD8E6")#set background color of the window
 display = tk.Entry(root, font=("Arial", 24), borderwidth=5, relief="flat", justify="right")
 display.pack(pady=20, padx=20, fill="both")
 buttons = [
