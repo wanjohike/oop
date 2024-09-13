@@ -6,6 +6,8 @@ def button_click(value):
 def clear_display():
     display.delete(0, tk.END)
 def calculate():
+    #exception handling. this ensures that our program executes to the ens
+    # and does not crash
     try:
         expression = display.get()
         result = eval(expression)
@@ -15,13 +17,14 @@ def calculate():
         display.delete(0, tk.END)
         display.insert(tk.END, "Error")
 
-#crate the main window. you can call it anything, for instance main, being that its
+#create the main window. you can call it anything, for instance main, being that its
 #the first window 
 root = tk.Tk()
 root.title("Calculator")
 root.geometry("400x500")
 root.resizable(False, False)#the window will not be resized
 root.configure(bg="#ADD8E6")#set background color of the window
+#see if you can define a function to allow users to change their background color for line 26
 display = tk.Entry(root, font=("Arial", 24), borderwidth=5, relief="flat", justify="right")
 display.pack(pady=20, padx=20, fill="both")
 buttons = [
