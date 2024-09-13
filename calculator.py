@@ -30,6 +30,7 @@ buttons = [
     '1', '2', '3', '-', 
     '0', 'C', '=', '+'
 ]
+#create a new window over the current window
 button_frame = tk.Frame(root)
 button_frame.pack(pady=10)
 
