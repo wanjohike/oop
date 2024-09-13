@@ -42,9 +42,13 @@ col = 0
 
 for button in buttons:
     action = lambda x=button: button_click(x) if x != "=" and x != "C" else calculate() if x == "=" else clear_display()
+   #defines an anonymous function (lambda function) with a default argument x set to button. 
+   #This lambda function is used to determine what action to take based on the value of x.
     tk.Button(button_frame, text=button, width=9, height=3,bg="#79E5F2", command=action).grid(row=row, column=col, padx=5, pady=5)
     col += 1
     if col > 3:
         col = 0
         row += 1
+
+#defne a function to allow users to use the keyboard instead of clicking on the buttons
 root.mainloop()
