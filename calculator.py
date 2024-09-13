@@ -1,6 +1,6 @@
 import tkinter as tk
 def button_click(value):
-    current_text = display.get()
+    current_text = display.get()#tk.END refers to the position after the existing text. 
     display.delete(0, tk.END)
     display.insert(tk.END, current_text + str(value))
 def clear_display():
