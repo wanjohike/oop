@@ -1,31 +1,63 @@
 import tkinter as tk
 def button_click(value):
+    
     current_text = display.get()#tk.END refers to the position after the existing text. 
     display.delete(0, tk.END)
     display.insert(tk.END, current_text + str(value))
 def clear_display():
+    
     display.delete(0, tk.END)
 
+
 def set_theme(theme):
+    """
+    Set the theme of the calculator.
+    
+    Parameters:
+        theme (str): The theme to use. Can be either 'dark' or 'light'.
+    """
+    # Set the background color of the root (main window)
     if theme == 'dark':
         root.configure(bg='#333333')
+        # Set the background color of the display
         display.configure(bg='#555555', fg='#ffffff')
     elif theme == 'light':
         root.configure(bg='#ADD8E6')
+        # Set the background color of the display
         display.configure(bg='#ffffff', fg='#000000')
+    else:
+        raise ValueError("Invalid theme. Must be either 'dark' or 'light'")
+
+
 
 def calculate():
-    #exception handling. this ensures that our program executes to the ens
-    # and does not crash
+    """
+    Evaluate the mathematical expression in the display and display the result.
+
+    This function is called when the "=" button is clicked.
+
+    Parameters:
+        None
+
+    Returns:
+        None
+    """
+    # Exception handling. This ensures that the program does not crash if the
+    # expression is invalid or if there is some other error.
     try:
+        # Get the expression from the display
         expression = display.get()
+        # Evaluate the expression using the eval() function
         result = eval(expression)
+        # Delete the current contents of the display
         display.delete(0, tk.END)
+        # Insert the result into the display
         display.insert(tk.END, result)
     except Exception as e:
+        # If there is an error, delete the current contents of the display
         display.delete(0, tk.END)
+        # Insert the string "Error" into the display
         display.insert(tk.END, "Error")
-
 
 
 #create the main window. you can call it anything, for instance main, being that its
@@ -70,6 +102,6 @@ for button in buttons:
         col = 0
         row += 1
 
-#defne a function to allow users to use the keyboard instead of clicking on the buttons
+#define a function to allow users to use the keyboard instead of clicking on the buttons
 
 root.mainloop()
