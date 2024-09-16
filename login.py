@@ -10,6 +10,11 @@ main_home.resizable(False,False)
 
 # function to close the program
 def exit():
+    """
+    Closes the main window and exits the program.
+
+    This function is called by the 'Exit' button.
+    """
     main_home.destroy()
 
 #username and password field
