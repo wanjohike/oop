@@ -1,34 +1,7 @@
-# create a tkinter window for registration with the following fields;
-# username
-# firstname, surname, email, password,repeat password, phone number
-# login button
-# registration button
-# exit button
-
-# create a login page containing username and password fields
-# login, reigstration and exit buttons
-
-# download and install Xampp
-
 import tkinter as tk
 from tkinter import messagebox
-import mysql.connector#this is for connection to the database
+from dbconnector import connect_db
 from mysql.connector import Error
-
-# set up the database connection
-def connect_db():
-    # to prevent the system from crushing, embrase exception handling
-    # enclose in a try finally block
-    try:
-        return mysql.connector.connect(
-        host = 'localhost',
-        user = 'admin',
-        password='1234',
-        database ='retail'
-    )
-    except Error as e:
-        messagebox.showerror('Database Error', f'Database Connection Failed!!: {e}')
-        return None
 
 
 # define the function to register the user
@@ -52,14 +25,13 @@ def register_user():
         cursor.execute(sql,val)
         db.commit()
         messagebox.showinfo('Success', 'Registration Successful')
+       except Error as e:
+        messagebox.showerror('Database Error', f'Data Could Not be Saved!!')
         cursor.close()#close the database connection
        finally:
         db.close()
-       
 
-
-
-
+# define a function for login into the system
 
 main_home = tk.Tk()
 main_home.title("Registration Form")
