@@ -11,16 +11,24 @@
 # download and install Xampp
 
 import tkinter as tk
+from tkinter import messagebox
 import mysql.connector#this is for connection to the database
+from mysql.connector import Error
 
 # set up the database connection
 def connect_db():
-    return mysql.connector.connect(
+    # to prevent the system from crushing, embrase exception handling
+    # enclose in a try finally block
+    try:
+        return mysql.connector.connect(
         host = 'localhost',
         user = 'admin',
         password='1234',
         database ='retail'
     )
+    except Error as e:
+        messagebox.showerror('Database Error', f'Database Connection Failed!!: {e}')
+        return None
 
 
 # define the function to register the user
@@ -33,10 +41,21 @@ def register_user():
     phone = phone_entry.get()
 
     if repassword != password:
-        print("Password Missmatch")
+        messagebox.showerror('Password Error', 'Password Mismatch')
 
     else:
-        print('registration successful')
+       try:
+        db = connect_db()
+        cursor = db.cursor() #  use the cursor cvlass to execute our sql code
+        sql ='insert into registration (username, fname,surname,pass,phone) values(%s, %s,%s,%s,%s)' 
+        val=(user,fName,sName,password,phone)
+        cursor.execute(sql,val)
+        db.commit()
+        messagebox.showinfo('Success', 'Registration Successful')
+        cursor.close()#close the database connection
+       finally:
+        db.close()
+       
 
 
 
@@ -98,7 +117,7 @@ phone_entry.grid(row=5, column=1)
 login = tk.Button(main_home, text="Login")
 login.grid(row=6, column=0)
 
-register = tk.Button(main_home, text="Register")
+register = tk.Button(main_home, text="Register", command = register_user)
 register.grid(row=6, column=1)
 
 exit = tk.Button(main_home, text="Exit", command=exit)
