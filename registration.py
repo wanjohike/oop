@@ -12,13 +12,14 @@ def register_user():
     sName = snameentry.get()
     password = passentry.get()
     repassword = repassentry.get()
-    # gender = gender_entry.get()
+    phone = phone_entry.get()
+    gender = gender_var.get()
     # dob = dob_entry.get()
     # add email
     # add gender (male, female, rather not say)
     # date of birth
-    phone = phone_entry.get()
     email = emailentry.get()
+    dob = dob_entry.get()
 
     if repassword != password:
         messagebox.showerror('Password Error', 'Password Mismatch')
@@ -32,17 +33,22 @@ def register_user():
        try:
         db = connect_db()
         cursor = db.cursor() #  use the cursor class to execute our sql code
-        sql ='insert into registration (username, fname,surname,pass,phone,email) values(%s, %s,%s,%s,%s,%s)' 
-        val = (user,fName,sName,password,phone,email)
+        sql ='insert into registration (username, fname,sname,pass,phone,gender,email) values(%s, %s,%s,%s,%s,%s,%s)' 
+        val = (user,fName,sName,password,phone,gender,email)
         cursor.execute(sql,val)
         db.commit()
         result=messagebox.askquestion('Registration Successful', 'Add New Record?')
         if result =='no':
            main_home.destroy()
-        else:#clear the values in the textboxes
+        else:#clear the values in the widgets
            userentry.delete(0, tk.END)
            fnameentry.delete(0, tk.END)
            snameentry.delete(0, tk.END)
+           emailentry.delete(0,tk.END)
+           passentry.delete(0,tk.END)
+           repassentry.delete(0,tk.END)
+           phone_entry.delete(0,tk.END)
+           gender_var.set(None)
 
        except Error as e:
         messagebox.showerror('Database Error', f'Data could not be saved:{e}')
@@ -84,14 +90,14 @@ snameentry.grid(row=2, column=1)
 password = tk.Label(main_home, text="Password")
 password.grid(row=3, column=0)
 
-passentry = tk.Entry(main_home)
+passentry = tk.Entry(main_home, show='*')
 passentry.grid(row=3, column=1)
 
 # password confirmation
 repassword = tk.Label(main_home, text="Retype Password")
 repassword.grid(row=4, column=0)
 
-repassentry = tk.Entry(main_home)
+repassentry = tk.Entry(main_home, show='*')
 repassentry.grid(row=4, column=1)
 
 # password confirmation
