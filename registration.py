@@ -1,26 +1,8 @@
-# create a tkinter window for registration with the following fields;
-# username
-# firstname, surname, email, password,repeat password, phone number
-# login button
-# registration button
-# exit button
-
-# create a login page containing username and password fields
-# login, reigstration and exit buttons
-
-# download and install Xampp
-
 import tkinter as tk
-import mysql.connector#this is for connection to the database
-
-# set up the database connection
-def connect_db():
-    return mysql.connector.connect(
-        host = 'localhost',
-        user = 'admin',
-        password='1234',
-        database ='retail'
-    )
+from tkinter import messagebox
+from validate_email import validate_email
+from dbconnector import connect_db
+from mysql.connector import Error
 
 
 # define the function to register the user
@@ -30,17 +12,45 @@ def register_user():
     sName = snameentry.get()
     password = passentry.get()
     repassword = repassentry.get()
+    # gender = gender_entry.get()
+    # dob = dob_entry.get()
+    # add email
+    # add gender (male, female, rather not say)
+    # date of birth
     phone = phone_entry.get()
+    email = emailentry.get()
 
     if repassword != password:
-        print("Password Missmatch")
+        messagebox.showerror('Password Error', 'Password Mismatch')
+    elif len(password) <=6:
+        messagebox.showerror('Password Error', 'Password Must be more than 6 Characters')
+    # validate the email
+    elif validate_email(email)==False:
+       messagebox.showinfo('Invalid Email','Please Check Email and Try Again')
 
     else:
-        print('registration successful')
+       try:
+        db = connect_db()
+        cursor = db.cursor() #  use the cursor class to execute our sql code
+        sql ='insert into registration (username, fname,surname,pass,phone) values(%s, %s,%s,%s,%s)' 
+        val = (user,fName,sName,password,phone,email)
+        cursor.execute(sql,val)
+        db.commit()
+        result=messagebox.askquestion('Registration Successful', 'Add New Record?')
+        if result =='no':
+           main_home.destroy()
+        else:#clear the values in the textboxes
+           userentry.delete(0, tk.END)
+           fnameentry.delete(0, tk.END)
+           snameentry.delete(0, tk.END)
 
+       except Error as e:
+        messagebox.showerror('Database Error', 'Data could not be saved')
+        cursor.close()#close the database connection
+       finally:
+        db.close()
 
-
-
+# define a function for login into the system
 
 main_home = tk.Tk()
 main_home.title("Registration Form")
@@ -91,18 +101,40 @@ phone.grid(row=5, column=0)
 phone_entry = tk.Entry(main_home)
 phone_entry.grid(row=5, column=1)
 
+# email
+email = tk.Label(main_home, text="Email")
+email.grid(row=6, column=0)
+
+emailentry = tk.Entry(main_home)
+emailentry.grid(row=6, column=1)
+
+# gender
+gender_var =tk.StringVar()
+gender_var.set(None)
+
+gender_label = tk.Label(main_home,text='Gender')
+gender_label.grid(row=7, column=0)
+
+male_rb = tk.Radiobutton(main_home, text='Male', variable=gender_var,value='Male')
+male_rb.grid(row=7, column=1)
+
+female_rb = tk.Radiobutton(main_home, text='Female', variable=gender_var,value='Female')
+female_rb.grid(row=7, column=2)
+
+other_rb = tk.Radiobutton(main_home, text='Rather Not Say', variable=gender_var,value='Rather Not Say')
+other_rb.grid(row=7, column=3)
 # create a frame to hold the buttons
 
 # button_frame = tk.Frame(main_home, borderwidth=5, relief="sunken")
 
 login = tk.Button(main_home, text="Login")
-login.grid(row=6, column=0)
+login.grid(row=8, column=0)
 
-register = tk.Button(main_home, text="Register")
-register.grid(row=6, column=1)
+register = tk.Button(main_home, text="Register", command = register_user)
+register.grid(row=8, column=1)
 
 exit = tk.Button(main_home, text="Exit", command=exit)
-exit.grid(row=6, column=2)
+exit.grid(row=8, column=2)
 
 
 main_home.mainloop()

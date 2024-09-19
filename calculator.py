@@ -103,5 +103,4 @@ for button in buttons:
         row += 1
 
 #define a function to allow users to use the keyboard instead of clicking on the buttons
-
 root.mainloop()
