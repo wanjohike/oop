@@ -31,7 +31,7 @@ def register_user():
     else:
        try:
         db = connect_db()
-        cursor = db.cursor() #  use the cursor cvlass to execute our sql code
+        cursor = db.cursor() #  use the cursor class to execute our sql code
         sql ='insert into registration (username, fname,surname,pass,phone) values(%s, %s,%s,%s,%s)' 
         val = (user,fName,sName,password,phone,email)
         cursor.execute(sql,val)
