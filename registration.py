@@ -109,22 +109,32 @@ emailentry = tk.Entry(main_home)
 emailentry.grid(row=6, column=1)
 
 # gender
-gender_label = tk.Label(main_home,text='Gendre')
+gender_var =tk.StringVar()
+gender_var.set(None)
+
+gender_label = tk.Label(main_home,text='Gender')
 gender_label.grid(row=7, column=0)
 
-male_rb = tk.Radiobutton(main_home, text='Male', variable=gender_var,Value-'Male')
+male_rb = tk.Radiobutton(main_home, text='Male', variable=gender_var,value='Male')
+male_rb.grid(row=7, column=1)
+
+female_rb = tk.Radiobutton(main_home, text='Female', variable=gender_var,value='Female')
+female_rb.grid(row=7, column=2)
+
+other_rb = tk.Radiobutton(main_home, text='Rather Not Say', variable=gender_var,value='Rather Not Say')
+other_rb.grid(row=7, column=3)
 # create a frame to hold the buttons
 
 # button_frame = tk.Frame(main_home, borderwidth=5, relief="sunken")
 
 login = tk.Button(main_home, text="Login")
-login.grid(row=7, column=0)
+login.grid(row=8, column=0)
 
 register = tk.Button(main_home, text="Register", command = register_user)
-register.grid(row=7, column=1)
+register.grid(row=8, column=1)
 
 exit = tk.Button(main_home, text="Exit", command=exit)
-exit.grid(row=7, column=2)
+exit.grid(row=8, column=2)
 
 
 main_home.mainloop()
