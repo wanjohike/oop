@@ -32,7 +32,7 @@ def register_user():
        try:
         db = connect_db()
         cursor = db.cursor() #  use the cursor class to execute our sql code
-        sql ='insert into registration (username, fname,surname,pass,phone) values(%s, %s,%s,%s,%s)' 
+        sql ='insert into registration (username, fname,surname,pass,phone,email) values(%s, %s,%s,%s,%s,%s)' 
         val = (user,fName,sName,password,phone,email)
         cursor.execute(sql,val)
         db.commit()
@@ -45,7 +45,7 @@ def register_user():
            snameentry.delete(0, tk.END)
 
        except Error as e:
-        messagebox.showerror('Database Error', 'Data could not be saved')
+        messagebox.showerror('Database Error', f'Data could not be saved:{e}')
         cursor.close()#close the database connection
        finally:
         db.close()

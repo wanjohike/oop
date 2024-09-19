@@ -71,7 +71,7 @@ def connect_db():
         return mysql.connector.connect(
             host="localhost",
             user="root",
-            password="",
+            password="22",
             database="registration"
         )
     except Error as e:

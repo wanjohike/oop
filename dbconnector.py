@@ -9,8 +9,8 @@ def connect_db():
     try:
         return mysql.connector.connect(
         host = 'localhost',
-        user = 'admin',
-        password='1234',
+        user = 'root',
+        password='',
         database ='retail'
     )
     except Error as e:
