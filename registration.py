@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from validate_email import validate_email
+from tkcalendar import DateEntry
 from dbconnector import connect_db
 from mysql.connector import Error
 
@@ -49,6 +50,7 @@ def register_user():
            repassentry.delete(0,tk.END)
            phone_entry.delete(0,tk.END)
            gender_var.set(None)
+           dob_entry.set_date('')
 
        except Error as e:
         messagebox.showerror('Database Error', f'Data could not be saved:{e}')
@@ -129,18 +131,22 @@ female_rb.grid(row=7, column=2)
 
 other_rb = tk.Radiobutton(main_home, text='Rather Not Say', variable=gender_var,value='Rather Not Say')
 other_rb.grid(row=7, column=3)
-# create a frame to hold the buttons
 
-# button_frame = tk.Frame(main_home, borderwidth=5, relief="sunken")
+# dateofbirth
+dob_label = tk.Label(main_home,text='Date of Birth')
+dob_label.grid(row=8, column=0)
+
+dob_entry = DateEntry(main_home, date_patter='dd-mm-y')
+dob_entry.grid(row=8, column=1)
 
 login = tk.Button(main_home, text="Login")
-login.grid(row=8, column=0)
+login.grid(row=9, column=0)
 
 register = tk.Button(main_home, text="Register", command = register_user)
-register.grid(row=8, column=1)
+register.grid(row=9, column=1)
 
 exit = tk.Button(main_home, text="Exit", command=exit)
-exit.grid(row=8, column=2)
+exit.grid(row=9, column=2)
 
 
 main_home.mainloop()
