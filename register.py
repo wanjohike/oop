@@ -70,9 +70,9 @@ def connect_db():
     try:
         return mysql.connector.connect(
             host="localhost",
-            user="yourusername",
-            password="yourpassword",
-            database="yourdatabase"
+            user="root",
+            password="",
+            database="registration"
         )
     except Error as e:
         messagebox.showerror("Database Error", f"Error connecting to database: {e}")
@@ -88,7 +88,7 @@ def register_user():
         if db:
             try:
                 cursor = db.cursor()
-                cursor.execute("INSERT INTO users (username, password) VALUES (%s, %s)", (username, password))
+                cursor.execute("INSERT INTO user (username, password) VALUES (%s, %s)", (username, password))
                 db.commit()
                 messagebox.showinfo("Success", "Registration successful!")
             except Error as e:
@@ -109,7 +109,7 @@ def login_user():
     if db:
         try:
             cursor = db.cursor()
-            cursor.execute("SELECT * FROM users WHERE username=%s AND password=%s", (username, password))
+            cursor.execute("SELECT * FROM user WHERE username=%s AND password=%s", (username, password))
             result = cursor.fetchone()
             
             if result:
