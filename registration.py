@@ -11,6 +11,12 @@ def register_user():
     sName = snameentry.get()
     password = passentry.get()
     repassword = repassentry.get()
+    email = emailentry.get()
+    gender = gender_entry.get()
+    dob = dob_entry.get()
+    # add email
+    # add gender (male, female, rather not say)
+    # date of birth
     phone = phone_entry.get()
 
     if repassword != password:
